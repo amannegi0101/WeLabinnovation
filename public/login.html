@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="main-assets/css/login.css">
+</head>
+
+<body>
+  <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+    <div class="container">
+      <div class="card login-card">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img
+              src="https://images.moneycontrol.com/static-mcnews/2020/09/Blue-collar-770x433.png?impolicy=website&width=770&height=431"
+              alt="login" class="login-card-img">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h1>Hey</h1>
+              <p class="login-card-description"><small>login to access your dashboard</small></p>
+              <div>
+                <div class="form-group">
+                  <label for="email" class="">Phone Number</label>
+                  <input required type="text" name="phone number" id="t-phone" class="form-control"
+                    placeholder="Enter your phone number">
+                </div>
+                <div class="form-group mb-4">
+                  <label for="password" class="">Password</label>
+                  <input required type="password" id="t-password" class="form-control" placeholder="***********">
+                </div>
+                <div class="=" form-group">
+                  <label for="role" class="">Role</label>
+                  <select class="selectpicker form-control" id="sv">
+                    <option>Worker</option>
+                    <option>Job Provider</option>
+                  </select>
+                </div>
+
+                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Login"
+                  onclick="submit()">
+              </div>
+              <p class="login-card-footer-text">If you don't have an account, kindly create your account. Click here for
+                <a href="seeker_signup.html">worker</a> and <a href="provider_signup.html">job provider</a></p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <script>
+    function submit() {
+      let userName = $("#t-user").val();
+      localStorage.setItem("currentUser", userName);
+      var role = $('.selectpicker').selectpicker();
+      var sv = $("#sv").val();
+
+      console.log(sv)
+
+      var obj = {
+        "phone": $("#t-phone").val(),
+        "password": $("#t-password").val()
+      }
+
+
+      if (sv === "Worker") {
+        var url = '/SeekerEntry'
+        $.post(url, obj, function (res) {
+          alert(res.message)
+          if(res.id){
+            localStorage.setItem("seeker_id", res.id);
+            setTimeout(() => {
+      window.location.href = '/seeker_home.html'
+  }, 2000);
+            console.log(res.id)
+          }
+        })
+      } else {
+        console.log("here")
+        var url = '/ProviderEntry'
+        $.post(url, obj, function (res) {
+          alert(res.message)
+          if(res.id){
+            localStorage.setItem("provider_id", res.id);
+            setTimeout(() => {
+      window.location.href = '/provider_home.html'
+  }, 2000);
+            console.log(res.id)
+          }
+        })
+      }
+
+
+
+
+      //window.location.href = '/thome.html'
+
+    }
+  </script>
+  <link rel="stylesheet " type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+</body>
+
+</html>

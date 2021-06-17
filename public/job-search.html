@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Engage </title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="https://upload.wikimedia.org/wikipedia/commons/0/0f/Microsoft_logo_-_2012_%28vertical%29.svg" rel="icon">
+  <link href="https://upload.wikimedia.org/wikipedia/commons/0/0f/Microsoft_logo_-_2012_%28vertical%29.svg" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="main-assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="main-assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="main-assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="main-assets/vendor/owl.carousel/main-assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="main-assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="main-assets/vendor/aos/aos.css" rel="stylesheet">
+
+  
+  <link href="main-assets/css/style.css" rel="stylesheet">
+
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top  header-transparent ">
+    <div class="container d-flex align-items-center">
+
+      <div class="logo mr-auto">
+        <h1 class="text-light"><a href="index.html"><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Microsoft_logo_-_2012_%28vertical%29.svg"> Engage - WIT Hackathon</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="main-assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="index.html">Home</a></li>
+         <li class="get-started"><a href="login.html">Login</a></li>
+         <!-- <li class="get-started"><a href="iauth.html">For Job providers</a></li> -->
+         <li class="get-started"><a href="job-search.html">Job Search</a></li>
+        </ul>
+      </nav><!-- .nav-menu -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="container" style="width:900px;">  
+          
+          <h3 align="center">Search Available jobs here</h3>                 
+          <br /><br />  
+          <div align="center">  
+               <input type="text" name="search" id="search" class="form-control" />  
+          </div>  
+          <br /><br />  
+          <div class="table-responsive" >  
+               <table class="table table-bordered" id="employee_table">  
+                    <thead>  
+                         <th width="5%">ID</th>  
+                         <th width="25%">Job Title</th>  
+                         <th width="35%">Description</th>  
+                         <th width="15%">Location</th>  
+                         <th width="20%">Type</th>  
+                         
+                    </thead>
+                    <tbody id="tbody">
+
+                    </tbody>  
+                                        </table>  
+          </div>  
+     </div>  
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+
+
+  
+
+
+
+  <!-- Vendor JS Files -->
+  <script src="main-assets/vendor/jquery/jquery.min.js"></script>
+  <script src="main-assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="main-assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="main-assets/vendor/php-email-form/validate.js"></script>
+  <script src="main-assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="main-assets/vendor/venobox/venobox.min.js"></script>
+  <script src="main-assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="main-assets/js/main.js"></script>
+
+</body>
+<script>
+    $(document).ready(function(){
+          $.get('/FetchJob',function(data){
+            console.log(data)
+          })
+
+          $.get('/FetchJob', function (res, status) {
+            data = res.data;
+         var len = data.length;
+         //console.log(data);
+         for (var i = 0; i < len; i++) {
+
+            var xhtml = ` <tr>
+     <td>` + (i + 1) + `
+     </td>
+     <td>` + data[i].Title + `
+     </td>
+     <td>` + data[i].Description + `
+     </td>
+     <td> ` + data[i].JobLocation + `
+      </td>
+     <td>` + data[i].JobType + `
+     </td>
+    </tr>`
+ 
+    //console.log(xhtml)
+
+            $('#tbody').append(xhtml);
+
+         }
+
+      });
+
+           $('#search').keyup(function(){  
+                search_table($(this).val());  
+           });  
+           function search_table(value){  
+                $('#employee_table tr').each(function(){  
+                     var found = 'false';  
+                     $(this).each(function(){  
+                          if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
+                          {  
+                               found = 'true';  
+                          }  
+                     });  
+                     if(found == 'true')  
+                     {  
+                          $(this).show();  
+                     }  
+                     else  
+                     {  
+                          $(this).hide();  
+                     }  
+                });  
+           }  
+      }); 
+</script>
+
+</html>

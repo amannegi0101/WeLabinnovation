@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+   <title>engage</title>
+   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+      name='viewport' />
+      <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">  -->
+   <script src="assets/js/core/jquery.min.js"></script>
+   <link rel="stylesheet" type="text/css"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+   <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+   
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
+
+<style>
+ img {
+  max-width: 100%; /* This rule is very important, please do not ignore this! */
+  height: auto;
+}
+</style>
+
+</head>
+
+<body class="">
+   <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white">
+        <div class="logo text-center">
+
+           <a href="./index.html">
+              <img  style="height: 100px; width: 100px;" src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Microsoft_logo_-_2012_%28vertical%29.svg"></img>
+              <h3>BlueConnect Worker Dashboard</h3>
+           </a>
+        </div>
+        <div class="sidebar-wrapper">
+           <ul class="nav">
+              <li class="nav-item  ">
+                 <a class="nav-link" href="./seeker_home.html">
+                    <i class="material-icons">content_paste</i>
+                    <p>Profile</p>
+                 </a>
+              </li>
+              <li class="nav-item active">
+               <a class="nav-link" href="./seeker_jobsearch.html">
+                  <i class="material-icons">search</i>
+                  <p>Job Search</p>
+               </a>
+            </li>
+            <li class="nav-item ">
+               <a class="nav-link" href="./index.html">
+                  <i class="material-icons">logout</i>
+                  <p>logout</p>
+               </a>
+            </li>
+              
+            
+
+           </ul>
+        </div>
+     </div>
+      <div class="main-panel">
+         <!-- Navbar -->
+         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+            <div class="container-fluid">
+               <div class="navbar-wrapper">
+               </div>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index"
+                  aria-expanded="false" aria-label="Toggle navigation"> <span class="sr-only">Toggle navigation</span>
+                  <span class="navbar-toggler-icon icon-bar"></span>
+                  <span class="navbar-toggler-icon icon-bar"></span>
+                  <span class="navbar-toggler-icon icon-bar"></span>
+               </button>
+              
+               <div class="collapse navbar-collapse justify-content-end">
+
+   
+               </div>
+            </div>
+         </nav>
+         <!-- End Navbar -->
+         <div class="content" style="margin-top: 0px;">
+            <div class="container-fluid">
+               <div class="row">
+                  <div class="col-lg-12 col-md-12">
+                     <button type="button" class="btn btn-primary btn-lg btn-block">
+                        <h2> Search Job</h2>
+                     </button>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="wrapper wrapper-content animated fadeInRight">
+                        <div class="ibox-content forum-container">
+
+
+                           <!-- forum body -->
+                           <div class="col-md-12">
+                              
+                            <br>
+                            <div class="container" style="width:900px;">  
+          
+                              <h3 align="center">Search Available jobs here</h3>                 
+                              <br /><br />  
+                              <div align="center">  
+                                   <input type="text" name="search" id="search" class="form-control" placeholder="search here" />  
+                              </div>  
+                              <br /><br />  
+                              <div class="table-responsive" >  
+                                   <table class="table table-bordered" id="employee_table">  
+                                        <thead>  
+                                             <th width="5%">ID</th>  
+                                             <th width="25%">Job Title</th>  
+                                             <th width="35%">Description</th>  
+                                             <th width="15%">Location</th>  
+                                             <th width="20%">Type</th>  
+                                             
+                                        </thead>
+                                        <tbody id="tbody">
+                    
+                                        </tbody>  
+                                                            </table>  
+                              </div>  
+                         </div> 
+                              
+                             
+                             
+                            
+                           </div>
+
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="assets/js/core/popper.min.js"></script>
+      <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+      <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+
+
+      <script src="assets/js/plugins/jquery.validate.min.js"></script>
+
+      <script src="assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+</body>
+<script>
+   $(document).ready(function(){
+         $.get('/FetchJob',function(data){
+           console.log(data)
+         })
+
+         $.get('/FetchJob', function (res, status) {
+           data = res.data;
+        var len = data.length;
+        //console.log(data);
+        for (var i = 0; i < len; i++) {
+
+           var xhtml = ` <tr>
+    <td>` + (i + 1) + `
+    </td>
+    <td>` + data[i].Title + `
+    </td>
+    <td>` + data[i].Description + `
+    </td>
+    <td> ` + data[i].JobLocation + `
+     </td>
+    <td>` + data[i].JobType + `
+    </td>
+   </tr>`
+
+   //console.log(xhtml)
+
+           $('#tbody').append(xhtml);
+
+        }
+
+     });
+
+          $('#search').keyup(function(){  
+               search_table($(this).val());  
+          });  
+          function search_table(value){  
+               $('#employee_table tr').each(function(){  
+                    var found = 'false';  
+                    $(this).each(function(){  
+                         if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)  
+                         {  
+                              found = 'true';  
+                         }  
+                    });  
+                    if(found == 'true')  
+                    {  
+                         $(this).show();  
+                    }  
+                    else  
+                    {  
+                         $(this).hide();  
+                    }  
+               });  
+          }  
+     }); 
+</script>
+
+
+</html>
